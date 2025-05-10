@@ -1,6 +1,7 @@
 package com.fatec.pi_back.controller;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,15 @@ public class UserController {
         return updatedUser.map(ResponseEntity::ok)
                           .orElse(ResponseEntity.notFound().build());
     }
+
+    @PutMapping("password/{id}")
+    public ResponseEntity<User> updatePassword(@PathVariable Integer id, @RequestBody Map<String, String> body) {
+        String newPassword = body.get("password");
+        Optional<User> updatedUser = service.updatePassword(id, newPassword);
+        return updatedUser.map(ResponseEntity::ok)
+                        .orElse(ResponseEntity.notFound().build());
+    }
+
 
     @PutMapping("access/{id}")
     public ResponseEntity<Void> toggleAccess(@PathVariable Integer id) {

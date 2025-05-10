@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.fatec.pi_back.domain.User.*;
 import com.fatec.pi_back.repository.UserRepository;
@@ -29,6 +30,13 @@ public class UserService {
             existingUser.setAccess(data.access());
             existingUser.setUpdatedBy(data.User());
             return repository.save(existingUser);
+        });
+    }
+
+    public Optional<User> updatePassword(Integer id, String newPassword) {
+        return repository.findById(id).map(user -> {
+            user.setPassword(new BCryptPasswordEncoder().encode(newPassword));
+            return repository.save(user);
         });
     }
 
