@@ -10,5 +10,7 @@ CREATE TABLE IF NOT EXISTS `user` (
     updated_by INT,
     deleted TINYINT(1) NOT NULL DEFAULT 0,
 
-    PRIMARY KEY(id)
+    PRIMARY KEY(id),
+    CONSTRAINT fk_created_by_user_id FOREIGN KEY (created_by) REFERENCES `user`(id),
+    CONSTRAINT fk_updated_by_user_id FOREIGN KEY (updated_by) REFERENCES `user`(id)
 );
