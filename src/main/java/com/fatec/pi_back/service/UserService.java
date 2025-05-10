@@ -34,7 +34,7 @@ public class UserService {
 
     public boolean toggleUserAccess(Integer id) {
         return repository.findById(id).map(user -> {
-            user.setDeleted(!user.isDeleted()); // inverte o valor atual
+            user.setDeleted(!user.isDeleted());
             repository.save(user);
             return true;
         }).orElse(false);
