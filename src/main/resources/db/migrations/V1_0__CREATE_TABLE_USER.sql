@@ -1,5 +1,5 @@
-CREATE TABLE IF NOT EXISTS `user` (
-    id INT AUTO_INCREMENT,
+CREATE TABLE IF NOT EXISTS User (
+    id INT AUTO_INCREMENT PRIMARY KEY,
     email VARCHAR(255) NOT NULL,
     password VARCHAR(255) NOT NULL,
     access TINYINT(1) NOT NULL DEFAULT 0,
@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS `user` (
     updated_by INT,
     deleted TINYINT(1) NOT NULL DEFAULT 0,
 
-    PRIMARY KEY(id),
-    CONSTRAINT fk_created_by_user_id FOREIGN KEY (created_by) REFERENCES `user`(id),
-    CONSTRAINT fk_updated_by_user_id FOREIGN KEY (updated_by) REFERENCES `user`(id)
+    CONSTRAINT fk_created_by_user_id FOREIGN KEY (created_by) REFERENCES User(id),
+    CONSTRAINT fk_updated_by_user_id FOREIGN KEY (updated_by) REFERENCES User(id)
 );
