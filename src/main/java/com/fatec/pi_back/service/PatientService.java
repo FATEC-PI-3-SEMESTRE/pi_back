@@ -35,7 +35,7 @@ public class PatientService {
         Patient patient = new Patient();
         patient.setName(dto.name());
         patient.setAge(dto.age());
-        patient.setCondition(dto.condition());
+        patient.setPatient_condition(dto.condition());
         patient.setSelfCare(dto.selfCare());
 
         User createdBy = userRepository.findById(dto.UserID())
@@ -49,7 +49,7 @@ public class PatientService {
         return repository.findById(id).map(existing -> {
             existing.setName(updatedData.name());
             existing.setAge(updatedData.age());
-            existing.setCondition(updatedData.condition());
+            existing.setPatient_condition(updatedData.condition());
             existing.setSelfCare(updatedData.selfCare());
             User updatedBy = userRepository.findById(updatedData.UserID())
                                     .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
@@ -58,7 +58,7 @@ public class PatientService {
         });
     }
 
-    public boolean deleteMedication(Long id, Long UserID) {
+    public boolean deletePatient(Long id, Long UserID) {
         return repository.findById(id).map(patient -> {
             patient.setDeleted(!patient.isDeleted());
             User updatedBy = userRepository.findById(UserID)

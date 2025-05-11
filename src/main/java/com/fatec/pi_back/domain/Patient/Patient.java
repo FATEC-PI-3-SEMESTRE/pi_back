@@ -11,6 +11,7 @@ import com.fatec.pi_back.domain.User.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -29,11 +30,11 @@ import lombok.Setter;
 
 public class Patient {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private Integer age;
-    private String condition;
+    private String patient_condition;
     private Boolean selfCare;
 
     @CreationTimestamp
@@ -55,10 +56,10 @@ public class Patient {
     @Column(nullable = false)
     private boolean deleted = false;
     
-    public Patient(String name, Integer age, String condition, Boolean selfCare){
+    public Patient(String name, Integer age, String patient_condition, Boolean selfCare){
         this.name = name;
         this.age = age;
-        this.condition = condition;
+        this.patient_condition = patient_condition;
         this.selfCare = selfCare;
     }
 }
