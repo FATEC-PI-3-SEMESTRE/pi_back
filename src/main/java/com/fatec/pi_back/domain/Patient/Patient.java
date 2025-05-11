@@ -30,7 +30,7 @@ import lombok.Setter;
 public class Patient {
     @Id
     @GeneratedValue
-    private Integer id;
+    private Long id;
     private String name;
     private Integer age;
     private String condition;
