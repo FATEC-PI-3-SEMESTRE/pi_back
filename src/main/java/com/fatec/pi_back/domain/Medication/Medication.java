@@ -31,19 +31,19 @@ public class Medication {
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updated_at;
 
     @ManyToOne
     @JoinColumn(name = "created_by", updatable = false)
-    private User createdBy;
+    private User created_by;
 
     @ManyToOne
     @JoinColumn(name = "updated_by")
-    private User updatedBy;
+    private User updated_by;
 
     @Column(nullable = false)
     private boolean deleted = false;

@@ -2,6 +2,7 @@ package com.fatec.pi_back.controller;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import com.fatec.pi_back.service.MedicationService;
 
 import com.fatec.pi_back.domain.Medication.Medication;
+import com.fatec.pi_back.domain.Medication.MedicationDTO;
 
 
 @RestController
@@ -32,21 +34,23 @@ public class MedicationController {
     }
 
     @PostMapping
-    public ResponseEntity<Medication> create(@RequestBody Medication medication) {
+    public ResponseEntity<Medication> create(@RequestBody MedicationDTO medication) {
         Medication saved = service.createMedication(medication);
         return ResponseEntity.ok(saved);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Medication> update(@PathVariable Long id, @RequestBody Medication body) {
+    public ResponseEntity<Medication> update(@PathVariable Long id, @RequestBody MedicationDTO body) {
         Optional<Medication> updated = service.updateMedication(id, body);
         return updated.map(ResponseEntity::ok)
                       .orElse(ResponseEntity.notFound().build());
     }
 
     @PutMapping("/delete/{id}")
-    public ResponseEntity<Void> softDelete(@PathVariable Long id) {
-        boolean deleted = service.deleteMedication(id);
+    public ResponseEntity<Void> softDelete(@PathVariable Long id, @RequestBody Map<String, Object> body) {
+        Number userIdNumber = (Number) body.get("UserID");
+        Long userId = userIdNumber.longValue();
+        boolean deleted = service.deleteMedication(id, userId);
         return deleted ? ResponseEntity.noContent().build()
                        : ResponseEntity.notFound().build();
     }

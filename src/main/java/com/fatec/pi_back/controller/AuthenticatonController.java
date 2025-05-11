@@ -44,12 +44,26 @@ import org.springframework.web.bind.annotation.RequestBody;
 
         @PostMapping("/register")
         public ResponseEntity<String> register(@RequestBody @Valid UserDTO data) {
-            if(this.repository.findByEmail(data.email()) != null) return ResponseEntity.badRequest().build();
-            String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
-            User newUser = new User(data.email(), encryptedPassword, data.access());
+            if (this.repository.findByEmail(data.email()) != null) {
+        return ResponseEntity.badRequest().body("Email já cadastrado.");
+        }
 
-            this.repository.save(newUser);
-            return ResponseEntity.ok().build();
+        String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
+        User newUser = new User(data.email(), encryptedPassword, data.access());
+
+        User createdBy = repository.findById(data.UserID()).orElseGet(() -> {
+            User defaultCreator = new User();
+            defaultCreator.setEmail("sistema@local");
+            defaultCreator.setPassword(new BCryptPasswordEncoder().encode("sistema"));
+            defaultCreator.setAccess(false);
+            return repository.save(defaultCreator);
+        });
+
+        newUser.setCreated_by(createdBy);
+        newUser.setUpdated_by(createdBy);
+        this.repository.save(newUser);
+
+        return ResponseEntity.ok("Usuário registrado com sucesso.");
 
         }
     }

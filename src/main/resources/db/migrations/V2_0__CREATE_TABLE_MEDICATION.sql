@@ -1,4 +1,4 @@
-CREATE TABLE Medication (
+CREATE TABLE medication (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
     medication_function VARCHAR(255),
@@ -10,6 +10,6 @@ CREATE TABLE Medication (
     updated_by INT,
     deleted TINYINT(1) NOT NULL DEFAULT 0,
 
-    CONSTRAINT FK_Medication_CreatedBy FOREIGN KEY (created_by) REFERENCES User(id),
-    CONSTRAINT FK_Medication_UpdatedBy FOREIGN KEY (updated_by) REFERENCES User(id)
+    CONSTRAINT FK_Medication_CreatedBy FOREIGN KEY (created_by) REFERENCES user(id),
+    CONSTRAINT FK_Medication_UpdatedBy FOREIGN KEY (updated_by) REFERENCES user(id)
 );

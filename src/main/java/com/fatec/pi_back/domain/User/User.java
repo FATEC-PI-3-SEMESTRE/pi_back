@@ -32,7 +32,7 @@ import lombok.Setter;
 public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String email;
     private String password;
     private Boolean access;
@@ -45,18 +45,18 @@ public class User implements UserDetails{
 
     @CreationTimestamp
     @Column(updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
 
     @UpdateTimestamp
-    private LocalDateTime updatedAt;
+    private LocalDateTime updated_at;
 
     @ManyToOne
     @JoinColumn(name = "created_by", updatable = false)
-    private User createdBy;
+    private User created_by;
 
     @ManyToOne
     @JoinColumn(name = "updated_by")
-    private User updatedBy;    
+    private User updated_by;    
 
     @Column(nullable = false)
     private boolean deleted = false;
